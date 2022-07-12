@@ -1,15 +1,11 @@
-				/// <summary>
+	/// <summary>
         /// 设置属性块的块属性值
         /// </summary>20210924修改//20220712处理后台文字漂移问题
         /// <param name="blockId">属性块的ObjectId</param>
-        /// <param name="attNameValues">要设置的属性值，注：‘为泛型集合’</param>
+        /// <param name="attNameValues">要设置的属性值，注：‘为泛型集合字典’</param>
         /// <returns></returns>
         public bool SetAttributeEx(ObjectId blockId, Dictionary<string, string> attNameValues, Database acCurDb)
         {
-            // Document acDoc = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
-            //Database acCurDb = acDoc.Database;
-            //using (Database acCurDb = new Database(false, true))//20210924修改
-            //{
             using (Transaction acTrans = acCurDb.TransactionManager.StartTransaction())
             {
                 BlockReference br = acTrans.GetObject(blockId, OpenMode.ForRead) as BlockReference;
@@ -38,5 +34,4 @@
                 acTrans.Commit();  //提交修改必须有
             }
             return true;  //返回动态块的动态属性
-            //}
         }
