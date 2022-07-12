@@ -3,7 +3,7 @@
         /// </summary>20210924修改//20220712处理后台文字漂移问题
         /// <param name="blockId">属性块的ObjectId</param>
         /// <param name="attNameValues">要设置的属性值，注：‘为泛型集合字典’</param>
-        /// <returns></returns>
+        /// <returns>bool型</returns>
         public bool SetAttributeEx(ObjectId blockId, Dictionary<string, string> attNameValues, Database acCurDb)
         {
             using (Transaction acTrans = acCurDb.TransactionManager.StartTransaction())
@@ -21,17 +21,17 @@
                         //设置属性值
                         if (attNameValues[attref.Tag.ToUpper()] != null)
                         {
-                            attref.TextString = attNameValues[attref.Tag.ToUpper()].ToString();  //获取字典的值tt天天
+                            attref.TextString = attNameValues[attref.Tag.ToUpper()].ToString();  //设置获取字典的值
                         }
                         else
                         {
-                            attref.TextString = "";  //获取字典的值
+                            attref.TextString = "";  //属性标记未包含在字典键值对时，其值置为“”
                         }
                     }
                     attref.AdjustAlignment(acCurDb);//20220712加
                 }
                 HostApplicationServices.WorkingDatabase = prevDb;//20220712加
-                acTrans.Commit();  //提交修改必须有
+                acTrans.Commit();  //事务提交修改必须有
             }
-            return true;  //返回动态块的动态属性
+            return true;  //返回动态块的动态属性（bool）
         }
